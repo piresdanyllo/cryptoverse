@@ -24,7 +24,9 @@ const Cryptocurrencies = ({ simplified }) => {
                 <div className="search-crypto">
                     <Input
                         placeholder="Search Cryptocurrency"
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) =>
+                            setSearchTerm(e.target.value.toLowerCase())
+                        }
                     />
                 </div>
             )}
@@ -35,23 +37,26 @@ const Cryptocurrencies = ({ simplified }) => {
                         sm={12}
                         lg={6}
                         className="crypto-card"
-                        key={currency.id}
+                        key={currency.uuid}
                     >
-                        <Link to={`/crypto/${currency.id}`}>
+                        {/* Note: Change currency.id to currency.uuid  */}
+                        <Link
+                            key={currency.uuid}
+                            to={`/crypto/${currency.uuid}`}
+                        >
                             <Card
                                 title={`${currency.rank}. ${currency.name}`}
                                 extra={
                                     <img
                                         className="crypto-image"
                                         src={currency.iconUrl}
-                                        alt="Crypto Icon"
                                     />
                                 }
                                 hoverable
                             >
                                 <p>Price: {millify(currency.price)}</p>
                                 <p>Market Cap: {millify(currency.marketCap)}</p>
-                                <p>Daily Change: {millify(currency.change)}%</p>
+                                <p>Daily Change: {currency.change}%</p>
                             </Card>
                         </Link>
                     </Col>
